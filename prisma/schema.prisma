@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  nip       String   @unique
+  nama      String
+  role      String
+  group     String?
+  area      String?
+  password  String
+  createdAt DateTime @default(now())
+
+  reports       Report[]
+  reportPICs    ReportPIC[]
+  machineReports MachineReport[]
+}
+
+model Report {
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  kategori    String
+  noEjoWo     String?
+  assetNumber String
+  deskripsi   String
+  statusAkhir String
+  createdAt   DateTime @default(now())
+  createdBy   Int
+  creator     User     @relation(fields: [createdBy], references: [id])
+
+  actions    Action[]
+  reportPICs ReportPIC[]
+}
+
+model Action {
+  id         Int      @id @default(autoincrement())
+  reportId   Int
+  jamMulai   DateTime
+  jamSelesai DateTime
+  deskripsi  String
+  report     Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model Asset {
+  id          Int    @id @default(autoincrement())
+  assetNumber String @unique
+  area        String
+  createdAt   DateTime @default(now())
+}
+
+model ReportPIC {
+  id       Int @id @default(autoincrement())
+  reportId Int
+  userId   Int
+  report   Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@unique([reportId, userId])
+}
+
+model MachineReport {
+  id                  Int      @id @default(autoincrement())
+  tanggal             DateTime
+  assetNumber         String
+  deskripsi           String
+  kategori            String
+  pelapor             String
+  status              String   @default("B.OK")
+  actionPerbaikan     String?
+  pelaksana           String?
+  tanggalPelaksanaan  DateTime?
+  area                String
+  userId              Int
+  user                User     @relation(fields: [userId], references: [id])
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([tanggal])
+  @@index([status])
+}
+
+model Section {
+  id      Int    @id @default(autoincrement())
+  bagian  String
+  section String
+
+  @@unique([bagian, section])
+}
