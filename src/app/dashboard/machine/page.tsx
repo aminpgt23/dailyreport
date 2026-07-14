@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import SearchableSelect from "@/components/SearchableSelect";
 import Pagination from "@/components/Pagination";
+import ImportModal from "@/components/ImportModal";
 
 interface MachineReport {
   id: number;
@@ -74,6 +75,7 @@ export default function MachinePage() {
   const [currentUser, setCurrentUser] = useState({ nama: "" });
   const [userRole, setUserRole] = useState("");
   const [showCreate, setShowCreate] = useState(false);
+  const [showImport, setShowImport] = useState(false);
   const [editing, setEditing] = useState<MachineReport | null>(null);
 
   const [formTanggal, setFormTanggal] = useState(todayStr);
@@ -355,6 +357,14 @@ export default function MachinePage() {
           >
             Export Excel
           </button>
+          {userRole === "superadmin" && (
+            <button
+              onClick={() => setShowImport(true)}
+              className="rounded-lg border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 dark:border-blue-500 dark:text-blue-400 dark:hover:bg-blue-900/30"
+            >
+              Import Excel
+            </button>
+          )}
           {!isReviewer && (
             <button
               onClick={() => { resetCreateForm(); setShowCreate(true); }}
@@ -646,6 +656,26 @@ export default function MachinePage() {
           </div>
         </div>
       )}
+
+      <ImportModal
+        show={showImport}
+        onClose={() => setShowImport(false)}
+        title="Import Machine Report"
+        endpoint="/api/machine/import"
+        columns={[
+          { label: "Tanggal", field: "tanggal" },
+          { label: "Asset Number", field: "assetNumber" },
+          { label: "Deskripsi", field: "deskripsi" },
+          { label: "Kategori", field: "kategori" },
+          { label: "Pelapor", field: "pelapor" },
+          { label: "Area", field: "area" },
+          { label: "Status", field: "status" },
+          { label: "Action Perbaikan", field: "actionPerbaikan" },
+          { label: "Pelaksana", field: "pelaksana" },
+          { label: "Tanggal Pelaksanaan", field: "tanggalPelaksanaan" },
+        ]}
+        onResult={() => fetchData()}
+      />
     </div>
   );
 }

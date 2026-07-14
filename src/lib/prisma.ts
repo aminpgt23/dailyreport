@@ -1,15 +1,20 @@
 import { PrismaClient } from "../generated/prisma/client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
 function createPrismaClient() {
-  const adapter = new PrismaLibSql({
-    url: process.env["DATABASE_URL"] ?? "file:./dev.db",
+  const adapter = new PrismaMariaDb({
+    host: "localhost",
+    port: 3306,
+    user: "report_user",
+    password: "f@r1z_TH93",
+    database: "daily_report",
   });
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+export const prisma =
+  globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

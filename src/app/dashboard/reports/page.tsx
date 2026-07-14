@@ -60,7 +60,7 @@ function isCompleted(status: string) {
   return status === "OK" || status === "100%";
 }
 
-function generateBulkText(reports: Report[], assetAreaMap: Record<string, string>): string {
+function generateBulkText(reports: Report[], assetAreaMap: Record<string, string>, section: string, bagian: string, date: string): string {
   const groupBok: Report[] = [];
   const areaGroups: Record<string, Report[]> = {};
   for (const r of reports) {
@@ -74,6 +74,11 @@ function generateBulkText(reports: Report[], assetAreaMap: Record<string, string
   }
 
   const parts: string[] = [];
+
+  const d = date ? new Date(date + "T00:00:00") : new Date();
+  const dateFormatted = `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
+  parts.push(`Laporan ${section || ""} ${bagian || ""} Tanggal ${dateFormatted} :`);
+  parts.push("");
 
   if (groupBok.length > 0) {
     parts.push("*Job B.OK*");
@@ -358,7 +363,8 @@ export default function ReportsPage() {
     } catch {
       // silent
     }
-    await copyToClipboard(generateBulkText(reports, assetAreaMap));
+    const bagianLabel = (bagianOptions.find((b) => b.value === filterBagian)?.label || "").replace(/\s*\(.+\)$/, "");
+    await copyToClipboard(generateBulkText(reports, assetAreaMap, filterSection, bagianLabel, filterDate));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }

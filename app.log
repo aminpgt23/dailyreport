@@ -1,0 +1,489 @@
+
+> daily-report-app@0.1.0 start
+> next start
+
+▲ Next.js 16.2.10
+- Local:         http://localhost:3000
+- Network:       http://10.89.128.100:3000
+✓ Ready in 1732ms
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10002ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1_1r30f._.js:1:2536) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10002ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10002ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+Auth me error: Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10007ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10007ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10007ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10015ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0b2mxxq._.js:1:1957)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0b2mxxq._.js:1:6630) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10015ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10015ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10005ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async w (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1rd6v8x._.js:1:1525)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1rd6v8x._.js:1:5495) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10005ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10005ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10003ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0fy8h-m._.js:1:1525)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0fy8h-m._.js:1:5488) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10003ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10003ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10088ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0d__mg5._.js:1:4977) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10088ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10088ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10012ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1_1r30f._.js:1:2536) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10012ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10012ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10000ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async y (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0l9rbp8._.js:1:2750) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10000ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10000ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10001ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async y (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1tisaml._.js:1:1620)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1tisaml._.js:1:5935) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10001ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10001ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10001ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1_1r30f._.js:1:2536) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10001ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10001ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+Auth me error: Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10001ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10001ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10001ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10013ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0b2mxxq._.js:1:1957) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10013ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10013ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10001ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1_1r30f._.js:1:2536) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10001ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10001ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+Auth me error: Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10008ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10008ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10008ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10004ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0b2mxxq._.js:1:1957)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0b2mxxq._.js:1:6630) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10004ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10004ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10011ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async w (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1rd6v8x._.js:1:1525)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1rd6v8x._.js:1:5495) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10011ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10011ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10006ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0fy8h-m._.js:1:1525)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0fy8h-m._.js:1:5488) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10006ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10006ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+Auth me error: Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10007ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10007ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10007ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+Auth me error: Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10006ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10006ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10006ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10012ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async y (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0l9rbp8._.js:1:2750) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10012ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10012ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10004ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async y (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1tisaml._.js:1:1620)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1tisaml._.js:1:5935) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10004ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10004ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10003ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0fy8h-m._.js:1:1525)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0fy8h-m._.js:1:5488) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10003ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10003ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+Auth me error: Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10003ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10003ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10003ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10009ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1_1r30f._.js:1:2536) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10009ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10009ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+⨯ Error [DriverAdapterError]: pool timeout: failed to retrieve a connection from pool after 10002ms
+    (pool connections: active=0 idle=0 limit=10)
+    at eT.onError (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112496)
+    at eT.performIO (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:112436)
+    at async eT.queryRaw (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__1qlay0k._.js:17:110544)
+    at async _ (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0b2mxxq._.js:1:1957)
+    at async l (C:\Users\FARIZ THOMAFI\Desktop\Daily Report\.next\server\chunks\[root-of-the-server]__0b2mxxq._.js:1:6630) {
+  clientVersion: '7.8.0',
+  [cause]: {
+    originalCode: '45028',
+    originalMessage: 'pool timeout: failed to retrieve a connection from pool after 10002ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    kind: 'mysql',
+    code: 45028,
+    message: 'pool timeout: failed to retrieve a connection from pool after 10002ms\n' +
+      '    (pool connections: active=0 idle=0 limit=10)',
+    state: 'HY000',
+    cause: '(conn:8, no: 45044, SQLState: 08S01) RSA public key is not available client side. Either set option `cachingRsaPublicKey` to indicate public key path, or allow public key retrieval with option `allowPublicKeyRetrieval`'
+  }
+}
+
+C:\Users\FARIZ THOMAFI\Desktop\Daily Report>

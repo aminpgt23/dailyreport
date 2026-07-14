@@ -1,13 +1,13 @@
 import { PrismaClient } from "../src/generated/prisma/client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
-import path from "path";
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 
-const dbPath = path.resolve(process.cwd(), "dev.db");
-
-const adapter = new PrismaLibSql({
-  url: `file:${dbPath}`,
+const adapter = new PrismaMariaDb({
+  host: "localhost",
+  port: 3306,
+  user: "report_user",
+  password: "f@r1z_TH93",
+  database: "daily_report",
 });
-
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
