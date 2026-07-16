@@ -69,6 +69,7 @@ export default function UsersPage() {
   const PER_PAGE = 10;
   const [page, setPage] = useState(1);
   const [users, setUsers] = useState<User[]>([]);
+  const [totalData, setTotalData] = useState(0);
   const [bagianList, setBagianList] = useState<BagianItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -77,17 +78,30 @@ export default function UsersPage() {
   const [error, setError] = useState("");
   const [userRole, setUserRole] = useState("");
   const [showImport, setShowImport] = useState(false);
+  const [search, setSearch] = useState("");
+  const [filterRole, setFilterRole] = useState("");
+  const [filterGroup, setFilterGroup] = useState("");
+  const [filterArea, setFilterArea] = useState("");
   const isAdmin = userRole === "admin";
   const isSuperAdmin = userRole === "superadmin";
   const canManageAdmin = isSuperAdmin;
 
   async function fetchUsers() {
     try {
-      const res = await fetch("/api/users");
+      const params = new URLSearchParams({
+        page: String(page),
+        perPage: String(PER_PAGE),
+      });
+      if (search) params.set("search", search);
+      if (filterRole) params.set("role", filterRole);
+      if (filterGroup) params.set("group", filterGroup);
+      if (filterArea) params.set("area", filterArea);
+
+      const res = await fetch(`/api/users?${params}`);
       if (res.ok) {
         const data = await res.json();
         setUsers(data.users);
-        setPage(1);
+        setTotalData(data.pagination?.total || 0);
       }
     } catch {
       // silent
@@ -118,7 +132,12 @@ export default function UsersPage() {
     fetch("/api/auth/me").then((r) => r.ok && r.json()).then((d) => {
       if (d.user) setUserRole(d.user.role);
     });
-  }, []);
+  }, [page]);
+
+  useEffect(() => {
+    setPage(1);
+    fetchUsers();
+  }, [search, filterRole, filterGroup, filterArea]);
 
   function openCreate() {
     setEditingId(null);
@@ -222,6 +241,50 @@ export default function UsersPage() {
         </div>
       </div>
 
+      <div className="flex flex-wrap items-center gap-2">
+        <input
+          type="text"
+          placeholder="Cari NIP atau Nama..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="flex-1 min-w-[200px] rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+        />
+        <select
+          value={filterRole}
+          onChange={(e) => setFilterRole(e.target.value)}
+          className="rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+        >
+          <option value="">Semua Role</option>
+          <option value="user">User</option>
+          <option value="reviewer">Reviewer</option>
+          {canManageAdmin && <option value="admin">Admin</option>}
+          {isSuperAdmin && <option value="superadmin">Super Admin</option>}
+        </select>
+        <select
+          value={filterGroup}
+          onChange={(e) => setFilterGroup(e.target.value)}
+          className="rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+        >
+          <option value="">Semua Group</option>
+          <option value="Non Shift">Non Shift</option>
+          <option value="4G3S">4G3S</option>
+        </select>
+        <select
+          value={filterArea}
+          onChange={(e) => setFilterArea(e.target.value)}
+          className="rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+        >
+          <option value="">Semua Bagian</option>
+          {bagianList.map((b) => (
+            <option key={b.id} value={String(b.id)}>
+              {b.bagian} ({b.section})
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <p className="text-sm text-gray-500 dark:text-gray-400">{totalData} data ditemukan</p>
+
       <div className="overflow-x-auto rounded-xl border bg-white dark:bg-gray-900 dark:border-gray-700 shadow-sm">
         <table className="w-full text-left text-sm">
           <thead className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
@@ -243,7 +306,7 @@ export default function UsersPage() {
                 </td>
               </tr>
             ) : (
-              [...users].sort((a, b) => a.nama.localeCompare(b.nama)).slice((page - 1) * PER_PAGE, page * PER_PAGE).map((user) => (
+              users.map((user) => (
                 <tr key={user.id} className="border-b last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800 dark:border-gray-700">
                   <td className="px-4 py-3 text-center font-bold dark:text-gray-300">{user.nip}</td>
                   <td className="px-4 py-3 text-center dark:text-gray-300">{user.nama}</td>
@@ -294,7 +357,7 @@ export default function UsersPage() {
             )}
           </tbody>
         </table>
-        <Pagination page={page} totalPages={Math.ceil(users.length / PER_PAGE)} onChange={setPage} />
+        <Pagination page={page} totalPages={Math.ceil(totalData / PER_PAGE)} onChange={setPage} />
       </div>
 
       {showModal && (

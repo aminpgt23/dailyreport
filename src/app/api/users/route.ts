@@ -9,6 +9,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const { searchParams } = new URL(request.url);
+  const search = searchParams.get("search") || "";
+  const filterRole = searchParams.get("role") || "";
+  const filterGroup = searchParams.get("group") || "";
+  const filterArea = searchParams.get("area") || "";
+  const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+  const perPage = Math.min(100, Math.max(1, parseInt(searchParams.get("perPage") || "10")));
+
   const where: Record<string, unknown> = {};
   if (user.role === "superadmin") {
     // no filter — all users
@@ -16,21 +24,41 @@ export async function GET(request: NextRequest) {
     where.role = { in: ["user", "admin", "reviewer"] };
   }
 
-  const users = await prisma.user.findMany({
-    where,
-    select: {
-      id: true,
-      nip: true,
-      nama: true,
-      role: true,
-      group: true,
-      area: true,
-      createdAt: true,
-    },
-    orderBy: { nama: "asc" },
-  });
+  if (search) {
+    where.OR = [
+      { nip: { contains: search } },
+      { nama: { contains: search } },
+    ];
+  }
+  if (filterRole) where.role = filterRole;
+  if (filterGroup) where.group = filterGroup;
+  if (filterArea) where.area = filterArea;
 
-  return NextResponse.json({ users });
+  const skip = (page - 1) * perPage;
+
+  const [users, total] = await Promise.all([
+    prisma.user.findMany({
+      where,
+      select: {
+        id: true,
+        nip: true,
+        nama: true,
+        role: true,
+        group: true,
+        area: true,
+        createdAt: true,
+      },
+      orderBy: { nama: "asc" },
+      skip,
+      take: perPage,
+    }),
+    prisma.user.count({ where }),
+  ]);
+
+  return NextResponse.json({
+    users,
+    pagination: { page, perPage, total, totalPages: Math.ceil(total / perPage) },
+  });
 }
 
 export async function POST(request: NextRequest) {

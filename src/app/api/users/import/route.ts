@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getUserFromRequest } from "@/lib/auth";
+import bcrypt from "bcryptjs";
 
 export async function POST(request: NextRequest) {
   const authUser = getUserFromRequest(request);
@@ -57,12 +58,14 @@ export async function POST(request: NextRequest) {
         area = String(section.id);
       }
 
+      const hashedPassword = await bcrypt.hash(row.password, 10);
+
       try {
         await prisma.user.create({
           data: {
             nip: row.nip.trim(),
             nama: row.nama.trim(),
-            password: row.password,
+            password: hashedPassword,
             role: row.role.trim().toLowerCase(),
             group: row.group?.trim() || null,
             area,
