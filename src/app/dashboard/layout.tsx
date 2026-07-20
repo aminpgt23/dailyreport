@@ -83,23 +83,31 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     router.push("/login");
   }
 
-  const navLinks = [
-    { key: "dashboard", href: "/dashboard", label: "Dashboard" },
-    { key: "laporan", href: "/dashboard/reports", label: "Laporan" },
-    { key: "detail", href: "/dashboard/detail", label: "Detail" },
-    { key: "machine", href: "/dashboard/machine", label: "My Machine" },
-  ];
+  let navLinks: { key: string; href: string; label: string }[];
 
-  if (user?.role === "admin" || user?.role === "superadmin") {
-    navLinks.push(
-      { key: "asset", href: "/dashboard/assets", label: "Asset" },
-      { key: "section", href: "/dashboard/sections", label: "Section" },
-      { key: "akun", href: "/dashboard/users", label: "Akun" }
-    );
+  if (user?.role === "mymc") {
+    navLinks = [
+      { key: "machine", href: "/dashboard/machine", label: "My Machine" },
+    ];
+  } else {
+    navLinks = [
+      { key: "dashboard", href: "/dashboard", label: "Dashboard" },
+      { key: "laporan", href: "/dashboard/reports", label: "Laporan" },
+      { key: "detail", href: "/dashboard/detail", label: "Detail" },
+      { key: "machine", href: "/dashboard/machine", label: "My Machine" },
+    ];
+
+    if (user?.role === "admin" || user?.role === "superadmin") {
+      navLinks.push(
+        { key: "asset", href: "/dashboard/assets", label: "Asset" },
+        { key: "section", href: "/dashboard/sections", label: "Section" },
+        { key: "akun", href: "/dashboard/users", label: "Akun" }
+      );
+    }
   }
 
   const initial = user?.nama?.charAt(0)?.toUpperCase() || "?";
-  const roleLabel = user?.role === "superadmin" ? "Super Admin" : user?.role === "admin" ? "Admin" : user?.role === "reviewer" ? "Reviewer" : "User";
+  const roleLabel = user?.role === "superadmin" ? "Super Admin" : user?.role === "admin" ? "Admin" : user?.role === "reviewer" ? "Reviewer" : user?.role === "mymc" ? "MyMC" : "User";
 
   const expanded = !collapsed || isHovered;
 

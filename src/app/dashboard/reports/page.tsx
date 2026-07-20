@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, useRef } from "react";
 import Link from "next/link";
 import SearchableSelect from "@/components/SearchableSelect";
 import Pagination from "@/components/Pagination";
@@ -80,21 +80,19 @@ function generateBulkText(reports: Report[], assetAreaMap: Record<string, string
   parts.push(`Laporan ${section || ""} ${bagian || ""} Tanggal ${dateFormatted} :`);
   parts.push("");
 
-  if (groupBok.length > 0) {
-    parts.push("*Job B.OK*");
-    groupBok.forEach((r, i) => {
-      const lines: string[] = [];
-      lines.push(`${i + 1}. ${r.assetNumber} ${r.deskripsi} ${r.statusAkhir}`);
-      r.actions.forEach((a) => {
-        lines.push(
-          `> ${a.deskripsi} (${formatTime(a.jamMulai)} - ${formatTime(a.jamSelesai)})`
-        );
-      });
-      const picNames = r.reportPICs.map((p) => p.user.nama).join(", ");
-      if (picNames) lines.push(`- by ${picNames}`);
-      parts.push(lines.join("\n"));
+  parts.push("*Job B.OK*");
+  groupBok.forEach((r, i) => {
+    const lines: string[] = [];
+    lines.push(`${i + 1}. ${r.assetNumber} ${r.deskripsi} ${r.statusAkhir}`);
+    r.actions.forEach((a) => {
+      lines.push(
+        `> ${a.deskripsi} (${formatTime(a.jamMulai)} - ${formatTime(a.jamSelesai)})`
+      );
     });
-  }
+    const picNames = r.reportPICs.map((p) => p.user.nama).join(", ");
+    if (picNames) lines.push(`- by ${picNames}`);
+    parts.push(lines.join("\n"));
+  });
 
   for (const area of areaOrder) {
     const group = areaGroups[area];
@@ -135,6 +133,7 @@ export default function ReportsPage() {
   const [userSection, setUserSection] = useState("");
   const [copied, setCopied] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [exportMonth, setExportMonth] = useState(new Date().toISOString().slice(0, 7));
 
   const [showCreate, setShowCreate] = useState(false);
   const [fUsers, setFUsers] = useState<{ id: number; nip: string; nama: string }[]>([]);
@@ -265,7 +264,7 @@ export default function ReportsPage() {
     try {
       const [meRes, usersRes, assetsRes] = await Promise.all([
         fetch("/api/auth/me"),
-        fetch("/api/users"),
+        fetch("/api/users?perPage=100"),
         fetch("/api/assets"),
       ]);
       let users: { id: number; nip: string; nama: string }[] = [];
@@ -518,15 +517,41 @@ export default function ReportsPage() {
     }
   }
 
+  const picSearchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function handlePicSearch(search: string) {
+    if (picSearchTimer.current) clearTimeout(picSearchTimer.current);
+    picSearchTimer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/users?search=${encodeURIComponent(search)}&perPage=100`);
+        if (res.ok) {
+          const data = await res.json();
+          let users = data.users || [];
+          const meRes = await fetch("/api/auth/me");
+          if (meRes.ok) {
+            const meData = await meRes.json();
+            if (meData.user?.group === "4G3S") {
+              if (!users.some((u: any) => u.id === -1)) {
+                users.push({ id: -1, nip: "", nama: "NS" });
+              }
+            }
+          }
+          setFUsers(users.filter((u: any) => u.role !== "reviewer"));
+        }
+      } catch {
+        // silent
+      }
+    }, 300);
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Laporan</h1>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:gap-2">
           <button
             onClick={handleCopyAll}
             disabled={reports.length === 0}
-            className="rounded-lg border-2 border-dashed border-blue-300 dark:border-blue-800 px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/50 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-lg border-2 border-dashed border-blue-300 dark:border-blue-800 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/50 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {copied ? "✅ Tercopy!" : "📋 Copy All"}
           </button>
@@ -537,21 +562,41 @@ export default function ReportsPage() {
               link.click();
             }}
             disabled={!filterDate}
-            className="rounded-lg border dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-lg border dark:border-gray-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Export Excel
           </button>
           <button
             onClick={handleExportPdf}
             disabled={pdfLoading || reports.length === 0 || !filterDate}
-            className="rounded-lg border dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-lg border dark:border-gray-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {pdfLoading ? "Memproses..." : "Export PDF"}
+          </button>
+          <input
+            type="month"
+            value={exportMonth}
+            onChange={(e) => setExportMonth(e.target.value)}
+            className="w-full sm:w-36 rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+          />
+          <button
+            onClick={() => {
+              const [year, month] = exportMonth.split("-");
+              const params = new URLSearchParams({ month, year });
+              if (filterSection) params.set("section", filterSection);
+              if (filterBagian) params.set("bagian", filterBagian);
+              const link = document.createElement("a");
+              link.href = `/api/reports/export-monthly?${params}`;
+              link.click();
+            }}
+            className="rounded-lg border dark:border-gray-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+            Export Bulanan
           </button>
           {userRole !== "reviewer" && (
             <button
               onClick={openCreate}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+              className="rounded-lg bg-blue-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-white hover:bg-blue-700"
             >
               + Buat Laporan
             </button>
@@ -561,7 +606,7 @@ export default function ReportsPage() {
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Tanggal <span className="text-xs text-gray-400 dark:text-gray-500">(kosongkan untuk cari semua)</span></label>
+          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Tanggal <span className="hidden sm:inline text-xs text-gray-400 dark:text-gray-500">(kosongkan untuk cari semua)</span></label>
           <input
             type="date"
             value={filterDate}
@@ -864,6 +909,7 @@ export default function ReportsPage() {
                   value={fPicIds.join(",")}
                   onChange={(v) => setFPicIds(v ? v.split(",").map(Number) : [])}
                   placeholder="Cari PIC..."
+                  onSearchChange={handlePicSearch}
                 />
                 {fUsers.length === 0 && (
                   <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">

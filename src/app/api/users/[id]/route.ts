@@ -27,7 +27,7 @@ export async function PUT(
       return NextResponse.json({ error: "Anda tidak diizinkan mengubah user ini" }, { status: 403 });
     }
 
-    if (role && authUser.role !== "superadmin" && !["user", "reviewer"].includes(role)) {
+    if (role && authUser.role !== "superadmin" && !["user", "reviewer", "mymc"].includes(role)) {
       return NextResponse.json({ error: "Anda tidak diizinkan mengatur role ini" }, { status: 403 });
     }
 

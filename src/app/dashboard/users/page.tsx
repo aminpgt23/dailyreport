@@ -221,33 +221,33 @@ export default function UsersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Kelola Akun</h1>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:gap-2">
           {isSuperAdmin && (
             <button
               onClick={() => setShowImport(true)}
-              className="rounded-lg border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 dark:border-blue-500 dark:text-blue-400 dark:hover:bg-blue-900/30"
+              className="rounded-lg border border-blue-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-blue-600 hover:bg-blue-50 dark:border-blue-500 dark:text-blue-400 dark:hover:bg-blue-900/30"
             >
               Import Excel
             </button>
           )}
           <button
             onClick={openCreate}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            className="rounded-lg bg-blue-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-white hover:bg-blue-700"
           >
             + Tambah User
           </button>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-2">
         <input
           type="text"
           placeholder="Cari NIP atau Nama..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 min-w-[200px] rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+          className="col-span-2 sm:flex-1 sm:min-w-[200px] rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
         />
         <select
           value={filterRole}
@@ -257,6 +257,7 @@ export default function UsersPage() {
           <option value="">Semua Role</option>
           <option value="user">User</option>
           <option value="reviewer">Reviewer</option>
+          <option value="mymc">MyMC</option>
           {canManageAdmin && <option value="admin">Admin</option>}
           {isSuperAdmin && <option value="superadmin">Super Admin</option>}
         </select>
@@ -272,7 +273,7 @@ export default function UsersPage() {
         <select
           value={filterArea}
           onChange={(e) => setFilterArea(e.target.value)}
-          className="rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+          className="col-span-2 sm:col-span-1 rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
         >
           <option value="">Semua Bagian</option>
           {bagianList.map((b) => (
@@ -319,10 +320,12 @@ export default function UsersPage() {
                             ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300"
                             : user.role === "reviewer"
                               ? "bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-300"
-                              : "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
+                              : user.role === "mymc"
+                                ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300"
+                                : "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
                       }`}
                     >
-                      {user.role === "superadmin" ? "Super Admin" : user.role === "admin" ? "Admin" : user.role === "reviewer" ? "Reviewer" : "User"}
+                      {user.role === "superadmin" ? "Super Admin" : user.role === "admin" ? "Admin" : user.role === "reviewer" ? "Reviewer" : user.role === "mymc" ? "MyMC" : "User"}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-center dark:text-gray-300">{user.group || "-"}</td>
@@ -405,6 +408,7 @@ export default function UsersPage() {
                 >
                   <option value="user">User</option>
                   <option value="reviewer">Reviewer</option>
+                  <option value="mymc">MyMC</option>
                   {canManageAdmin && <option value="admin">Admin</option>}
                   {isSuperAdmin && <option value="superadmin">Super Admin</option>}
                 </select>

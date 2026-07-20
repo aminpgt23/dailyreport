@@ -49,6 +49,17 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
       }
 
+      if (payload.role === "mymc") {
+        const allowedPaths = ["/dashboard/machine", "/api/machine"];
+        const isAllowed = allowedPaths.some((p) => pathname.startsWith(p));
+        if (!isAllowed) {
+          if (isApi) {
+            return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+          }
+          return NextResponse.redirect(new URL("/dashboard/machine", request.url));
+        }
+      }
+
       if (payload.role === "reviewer") {
         const isEditPath = /^\/dashboard\/reports\/\d+\/edit$/.test(pathname);
         const isCreatePath = pathname === "/dashboard/reports/create";

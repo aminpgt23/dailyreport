@@ -12,6 +12,8 @@ export async function GET(request: NextRequest) {
   const startDate = searchParams.get("start");
   const endDate = searchParams.get("end");
   const userId = searchParams.get("userId");
+  const section = searchParams.get("section") || "";
+  const bagian = searchParams.get("bagian") || "";
   const groupBased = searchParams.get("groupBased") === "1";
 
   if (!startDate || !endDate) {
@@ -36,12 +38,73 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  if ((authUser.role === "admin" || authUser.role === "superadmin" || authUser.role === "reviewer") && (section || bagian)) {
+    let filterUserIds: number[] = [];
+    if (bagian) {
+      let bagianName = bagian;
+      let secIds: string[] = [];
+      if (/^\d+$/.test(bagian)) {
+        const sec = await prisma.section.findUnique({ where: { id: Number(bagian) } });
+        if (sec) {
+          bagianName = sec.bagian;
+          secIds = [bagian];
+        }
+      } else {
+        const secs = await prisma.section.findMany({ where: { bagian } });
+        secIds = secs.map((s) => String(s.id));
+      }
+      const uids = await prisma.user.findMany({
+        where: {
+          OR: [
+            { area: { in: secIds } },
+            { area: bagianName },
+            { area: { startsWith: bagianName + "||" } },
+          ],
+        },
+        select: { id: true },
+      });
+      filterUserIds = uids.map((u) => u.id);
+    } else if (section) {
+      const secs = await prisma.section.findMany({
+        where: { section },
+        select: { id: true, bagian: true },
+      });
+      const bagianList = secs.map((s) => s.bagian);
+      const secIds = secs.map((s) => String(s.id));
+      const uids = await prisma.user.findMany({
+        where: {
+          OR: [
+            { area: { in: secIds } },
+            ...bagianList.map((b) => ({
+              OR: [
+                { area: b },
+                { area: { startsWith: b + "||" } },
+              ],
+            })),
+          ],
+        },
+        select: { id: true },
+      });
+      filterUserIds = uids.map((u) => u.id);
+    }
+    if (filterUserIds.length > 0) {
+      if (userId) {
+        const uid = Number(userId);
+        userWhere.id = filterUserIds.includes(uid) ? uid : -1;
+      } else {
+        userWhere.id = { in: filterUserIds };
+      }
+    } else {
+      userWhere.id = -1;
+    }
+  }
+
   let users = await prisma.user.findMany({
     where: userWhere,
     select: { id: true, nip: true, nama: true, group: true, area: true },
   });
   if (authUser.role === "admin" || authUser.role === "superadmin" || authUser.role === "reviewer") {
-    users = users.filter((u) => u.nip !== "NS");
+    users = users.filter((u) => u.nip !== "NS" && !u.nip.toLowerCase().includes("dummy"));
   }
 
   const userIds = users.map((u) => u.id);
@@ -67,11 +130,10 @@ export async function GET(request: NextRequest) {
     select: { reportId: true, jamMulai: true, jamSelesai: true },
   });
 
-  const reportMinutes: Record<number, number> = {};
+  const reportActions: Record<number, Array<{ jamMulai: Date; jamSelesai: Date }>> = {};
   for (const action of actions) {
-    const diffMs = new Date(action.jamSelesai).getTime() - new Date(action.jamMulai).getTime();
-    const mins = Math.max(0, Math.round(diffMs / 60000));
-    reportMinutes[action.reportId] = (reportMinutes[action.reportId] || 0) + mins;
+    if (!reportActions[action.reportId]) reportActions[action.reportId] = [];
+    reportActions[action.reportId].push({ jamMulai: action.jamMulai, jamSelesai: action.jamSelesai });
   }
 
   const result = [];
@@ -79,11 +141,36 @@ export async function GET(request: NextRequest) {
   for (const user of users) {
     const userReportIds = userReportMap[user.id];
     const reportCount = userReportIds ? userReportIds.size : 0;
-    let totalMinutes = 0;
+
+    const intervals: Array<{ start: number; end: number }> = [];
     if (userReportIds) {
       for (const rid of userReportIds) {
-        totalMinutes += reportMinutes[rid] || 0;
+        const acts = reportActions[rid] || [];
+        for (const act of acts) {
+          intervals.push({
+            start: new Date(act.jamMulai).getTime(),
+            end: new Date(act.jamSelesai).getTime(),
+          });
+        }
       }
+    }
+
+    intervals.sort((a, b) => a.start - b.start);
+
+    let totalMinutes = 0;
+    if (intervals.length > 0) {
+      let curStart = intervals[0].start;
+      let curEnd = intervals[0].end;
+      for (let i = 1; i < intervals.length; i++) {
+        if (intervals[i].start <= curEnd) {
+          curEnd = Math.max(curEnd, intervals[i].end);
+        } else {
+          totalMinutes += Math.max(0, Math.round((curEnd - curStart) / 60000));
+          curStart = intervals[i].start;
+          curEnd = intervals[i].end;
+        }
+      }
+      totalMinutes += Math.max(0, Math.round((curEnd - curStart) / 60000));
     }
 
     const totalJam = Math.floor(totalMinutes / 60);

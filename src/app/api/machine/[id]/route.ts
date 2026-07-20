@@ -10,7 +10,7 @@ export async function PATCH(
   if (!authUser) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  if (authUser.role === "reviewer") {
+  if (authUser.role === "reviewer" || authUser.role === "mymc") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -58,7 +58,7 @@ export async function DELETE(
   if (!authUser) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  if (authUser.role === "reviewer") {
+  if (authUser.role === "reviewer" || authUser.role === "mymc") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

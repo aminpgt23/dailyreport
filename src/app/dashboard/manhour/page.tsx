@@ -53,7 +53,7 @@ export default function ManHourPage() {
         const res = await fetch("/api/users");
         if (res.ok) {
           const data = await res.json();
-          setUsers(data.users);
+          setUsers(data.users.filter((u: User) => !u.nip.toLowerCase().includes("dummy")));
         }
       } catch {
         // silent

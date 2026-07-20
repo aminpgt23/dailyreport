@@ -119,7 +119,7 @@ export async function GET(request: NextRequest) {
     belumSelesai,
     reports: allReports,
     picStats: Object.entries(picStats)
-      .filter(([nip]) => nip !== "NS")
+      .filter(([nip]) => nip !== "NS" && !nip.toLowerCase().includes("dummy"))
       .map(([nip, data]) => ({
         nip,
         ...data,

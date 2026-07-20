@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import SearchableSelect from "@/components/SearchableSelect";
 import Pagination from "@/components/Pagination";
 
 interface ManHour {
@@ -14,6 +15,12 @@ interface ManHour {
   totalJamDecimal: number;
   targetMinutes: number;
   persentase: number;
+}
+
+interface BagianItem {
+  id: number;
+  bagian: string;
+  section: string;
 }
 
 function getToday() {
@@ -30,6 +37,38 @@ export default function DashboardPage() {
   });
   const [manhours, setManhours] = useState<ManHour[]>([]);
   const [loadingMH, setLoadingMH] = useState(true);
+  const [sectionOptions, setSectionOptions] = useState<string[]>([]);
+  const [bagianOptions, setBagianOptions] = useState<{ value: string; label: string }[]>([]);
+  const [filterSection, setFilterSection] = useState("");
+  const [filterBagian, setFilterBagian] = useState("");
+  const [userRole, setUserRole] = useState("");
+  const canFilter = userRole === "admin" || userRole === "superadmin" || userRole === "reviewer";
+
+  useEffect(() => {
+    async function fetchMeta() {
+      const [sRes, meRes] = await Promise.all([
+        fetch("/api/sections"),
+        fetch("/api/auth/me"),
+      ]);
+      if (sRes.ok) {
+        const sData = await sRes.json();
+        const sectionData = sData.sections;
+        setSectionOptions([...new Set<string>(sectionData.map((s: any) => s.section))].sort());
+        setBagianOptions([
+          { value: "", label: "Semua" },
+          ...sectionData.map((s: any) => ({
+            value: String(s.id),
+            label: `${s.bagian} (${s.section})`,
+          })),
+        ]);
+      }
+      if (meRes.ok) {
+        const meData = await meRes.json();
+        setUserRole(meData.user?.role || "");
+      }
+    }
+    fetchMeta();
+  }, []);
 
   useEffect(() => {
     async function fetchStats() {
@@ -48,9 +87,13 @@ export default function DashboardPage() {
 
   useEffect(() => {
     async function fetchManHour() {
+      setLoadingMH(true);
       try {
         const today = getToday();
-        const res = await fetch(`/api/manhour?start=${today}&end=${today}&groupBased=1`);
+        const params = new URLSearchParams({ start: today, end: today, groupBased: "1" });
+        if (filterSection) params.set("section", filterSection);
+        if (filterBagian) params.set("bagian", filterBagian);
+        const res = await fetch(`/api/manhour?${params}`);
         if (res.ok) {
           const data = await res.json();
           setManhours(data.manhours);
@@ -62,7 +105,7 @@ export default function DashboardPage() {
       }
     }
     fetchManHour();
-  }, []);
+  }, [filterSection, filterBagian]);
 
   return (
     <div className="space-y-6">
@@ -88,9 +131,42 @@ export default function DashboardPage() {
       </div>
 
       <div className="rounded-xl border bg-white dark:bg-gray-900 dark:border-gray-700 p-5 shadow-sm">
-        <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
-          Man Hour Hari Ini ({getToday()})
-        </h2>
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Man Hour Hari Ini ({getToday()})
+          </h2>
+          {canFilter && (
+            <div className="flex flex-wrap items-center gap-2">
+              <select
+                value={filterSection}
+                onChange={(e) => { setFilterSection(e.target.value); setFilterBagian(""); }}
+                className="w-36 rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 dark:border-gray-600 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              >
+                <option value="">Semua</option>
+                {sectionOptions.map((s) => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+              <div className="w-36">
+                <SearchableSelect
+                  options={filterSection ? bagianOptions.filter((b) => !b.value || b.label.endsWith(`(${filterSection})`)) : bagianOptions}
+                  value={filterBagian}
+                  onChange={(v) => {
+                    setFilterBagian(v);
+                    if (v) {
+                      const matched = bagianOptions.find((b) => b.value === v);
+                      if (matched) {
+                        const sec = matched.label.match(/\((.+)\)$/)?.[1] || "";
+                        setFilterSection(sec);
+                      }
+                    }
+                  }}
+                  placeholder="Cari Bagian..."
+                />
+              </div>
+            </div>
+          )}
+        </div>
         {loadingMH ? (
           <p className="text-sm text-gray-500 dark:text-gray-400">Memuat data...</p>
         ) : manhours.length === 0 ? (

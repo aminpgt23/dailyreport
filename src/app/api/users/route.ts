@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (authUser.role !== "superadmin" && !["user", "reviewer"].includes(role)) {
+    if (authUser.role !== "superadmin" && !["user", "reviewer", "mymc"].includes(role)) {
       return NextResponse.json({ error: "Anda tidak diizinkan membuat role ini" }, { status: 403 });
     }
 

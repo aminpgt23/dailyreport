@@ -14,6 +14,7 @@ interface Props {
   placeholder?: string;
   required?: boolean;
   multi?: boolean;
+  onSearchChange?: (search: string) => void;
 }
 
 export default function SearchableSelect({
@@ -23,6 +24,7 @@ export default function SearchableSelect({
   placeholder = "Cari...",
   required,
   multi,
+  onSearchChange,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -88,7 +90,10 @@ export default function SearchableSelect({
             <input
               type="text"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                onSearchChange?.(e.target.value);
+              }}
               placeholder="Cari..."
               className="w-full border-b border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
               autoFocus
@@ -150,7 +155,10 @@ export default function SearchableSelect({
           <input
             type="text"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              onSearchChange?.(e.target.value);
+            }}
             placeholder="Cari..."
             className="w-full border-b border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
             autoFocus

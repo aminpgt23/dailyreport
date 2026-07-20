@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, FormEvent, use } from "react";
+import { useState, useEffect, FormEvent, use, useRef } from "react";
 import { useRouter } from "next/navigation";
 import SearchableSelect from "@/components/SearchableSelect";
 
@@ -65,7 +65,7 @@ export default function EditReportPage({
       try {
         const [meRes, usersRes, assetsRes, reportRes] = await Promise.all([
           fetch("/api/auth/me"),
-          fetch("/api/users"),
+          fetch("/api/users?perPage=100"),
           fetch("/api/assets"),
           fetch(`/api/reports/${id}`),
         ]);
@@ -181,6 +181,32 @@ export default function EditReportPage({
     } finally {
       setLoading(false);
     }
+  }
+
+  const picSearchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function handlePicSearch(search: string) {
+    if (picSearchTimer.current) clearTimeout(picSearchTimer.current);
+    picSearchTimer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/users?search=${encodeURIComponent(search)}&perPage=100`);
+        if (res.ok) {
+          const data = await res.json();
+          let usersList = data.users || [];
+          const meRes = await fetch("/api/auth/me");
+          if (meRes.ok) {
+            const meData = await meRes.json();
+            if (meData.user?.group === "4G3S") {
+              if (!usersList.some((u: any) => u.id === -1)) {
+                usersList.push({ id: -1, nip: "", nama: "NS" });
+              }
+            }
+          }
+          setUsers(usersList.filter((u: any) => u.role !== "reviewer"));
+        }
+      } catch {
+        // silent
+      }
+    }, 300);
   }
 
   if (initialLoading) {
@@ -353,6 +379,7 @@ export default function EditReportPage({
             value={picIds.join(",")}
             onChange={(v) => setPicIds(v ? v.split(",").map(Number) : [])}
             placeholder="Cari PIC..."
+            onSearchChange={handlePicSearch}
           />
           {users.length === 0 && (
             <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">

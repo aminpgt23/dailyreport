@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SearchableSelect from "@/components/SearchableSelect";
 import Pagination from "@/components/Pagination";
 import ImportModal from "@/components/ImportModal";
@@ -131,7 +131,7 @@ export default function MachinePage() {
     async function fetchMeta() {
       const [assetsRes, usersRes, meRes] = await Promise.all([
         fetch("/api/assets"),
-        fetch("/api/users"),
+        fetch("/api/users?perPage=100"),
         fetch("/api/auth/me"),
       ]);
       if (assetsRes.ok) {
@@ -145,7 +145,7 @@ export default function MachinePage() {
         const users = await usersRes.json();
         const userList = users.users || users;
         setUserOptions(userList
-          .filter((u: any) => userRole === "superadmin" || u.role === "user" || u.role === "admin")
+          .filter((u: any) => u.role === "user" || u.role === "admin")
           .map((u: any) => ({ value: u.nama, label: `${u.nama} (${u.nip})` }))
         );
       }
@@ -158,6 +158,26 @@ export default function MachinePage() {
     }
     fetchMeta();
   }, []);
+
+  const userSearchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function handleUserSearch(search: string) {
+    if (userSearchTimer.current) clearTimeout(userSearchTimer.current);
+    userSearchTimer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/users?search=${encodeURIComponent(search)}&perPage=100`);
+        if (res.ok) {
+          const data = await res.json();
+          const userList = data.users || [];
+          setUserOptions(userList
+            .filter((u: any) => u.role === "user" || u.role === "admin")
+            .map((u: any) => ({ value: u.nama, label: `${u.nama} (${u.nip})` }))
+          );
+        }
+      } catch {
+        // silent
+      }
+    }, 300);
+  }
 
   function resetCreateForm() {
     setFormTanggal(todayStr());
@@ -365,7 +385,7 @@ export default function MachinePage() {
               Import Excel
             </button>
           )}
-          {!isReviewer && (
+          {userRole !== "reviewer" && (
             <button
               onClick={() => { resetCreateForm(); setShowCreate(true); }}
               className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
@@ -397,7 +417,7 @@ export default function MachinePage() {
                 <th className="px-3 py-2 text-gray-900 dark:text-gray-100">Action Perbaikan</th>
                 <th className="px-3 py-2 text-gray-900 dark:text-gray-100">Pelaksana</th>
                 <th className="px-3 py-2 text-gray-900 dark:text-gray-100">Tgl Pelaksanaan</th>
-                {!isReviewer && <th className="px-3 py-2 text-gray-900 dark:text-gray-100">Aksi</th>}
+                {userRole !== "reviewer" && userRole !== "mymc" && <th className="px-3 py-2 text-gray-900 dark:text-gray-100">Aksi</th>}
               </tr>
             </thead>
             <tbody>
@@ -429,7 +449,7 @@ export default function MachinePage() {
                   <td className="px-3 py-2 text-gray-900 dark:text-gray-100">
                     {item.tanggalPelaksanaan ? formatDDMMYYYY(item.tanggalPelaksanaan) : "-"}
                   </td>
-                  {!isReviewer && (
+                  {userRole !== "reviewer" && userRole !== "mymc" && (
                     <td className="px-3 py-2">
                       <div className="flex items-center justify-center gap-1">
                         <button
@@ -624,6 +644,7 @@ export default function MachinePage() {
                   onChange={setEditPelaksana}
                   placeholder="Cari Pelaksana..."
                   multi
+                  onSearchChange={handleUserSearch}
                 />
               </div>
               <div>
